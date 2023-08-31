@@ -1,31 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BMI Calculator</title>
+<style>
+    body {
+        font-family: "Times New Roman", Times, serif;
+        font-size: 20px;
+        background-color: #000;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #ff0000; /* Set font color to red */
+    }
+
+    .calculator {
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);
+        text-align: center;
+    }
+
+    h1 {
+        margin-top: 0;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    .button-74 {
+        background-color: #fbeee0;
+        border: 2px solid #422800;
+        border-radius: 30px;
+        box-shadow: #422800 4px 4px 0 0;
+        color: #ff0000; /* Set button color to red */
+        cursor: pointer;
+        display: inline-block;
+        font-weight: 600;
+        font-size: 18px;
+        padding: 0 18px;
+        line-height: 50px;
+        text-align: center;
+        text-decoration: none;
+        user-select: none;
+        -webkit-user-select: none;
+        touch-action: manipulation;
+    }
+
+    .button-74:hover {
+        background-color: #fff;
+    }
+
+    .button-74:active {
+        box-shadow: #422800 2px 2px 0 0;
+        transform: translate(2px, 2px);
+    }
+
+    @media (min-width: 768px) {
+        .button-74 {
+            min-width: 120px;
+            padding: 0 25px;
+        }
+    }
+</style>
+</head>
+<body>
+<div class="calculator">
+    <h1>BMI Calculator</h1>
+    <label for="weight">Weight (kg):</label>
+    <input type="number" id="weight" step="0.1" placeholder="Enter your weight" required><br>
+    <label for="height">Height (m):</label>
+    <input type="number" id="height" step="0.01" placeholder="Enter your height" required><br>
+    <button id="calculate" class="button-74">Calculate BMI</button>
+    <p id="result"></p>
+</div>
+
 <script>
+    document.getElementById('calculate').addEventListener('click', function() {
+        var weight = parseFloat(document.getElementById('weight').value);
+        var height = parseFloat(document.getElementById('height').value);
+
+        if (isNaN(weight) || isNaN(height)) {
+            document.getElementById('result').innerText = "Please enter valid values.";
+            return;
+        }
+
+        var bmi = calculate_bmi(weight, height);
+        var interpretation = interpret_bmi(bmi);
+
+        document.getElementById('result').innerText = "Your BMI is: " + bmi.toFixed(2) + "\nInterpretation: " + interpretation;
+    });
+
     function calculate_bmi(w, h) {
-        return (w) / (h * h);
+        return w / (h * h);
     }
 
     function interpret_bmi(bmi) {
         if (bmi < 18.5) {
-            return ("Underweight");
-        }
-        else if (bmi <= 25) {
-            return ("Normal weight");
-        }
-        else if (bmi <= 30) {
-            return ("Overweight");
-        }
-        else if (bmi >= 35 && bmi <= 40) {
-            return ("Obese");
+            return "Underweight";
+        } else if (bmi <= 25) {
+            return "Normal weight";
+        } else if (bmi <= 30) {
+            return "Overweight";
+        } else if (bmi >= 35 && bmi <= 40) {
+            return "Obese";
         }
 
-        return ("سير اتعالج")
+        return "سير اتعالج";
     }
-
-
-    var weight = parseFloat(prompt("Enter your weight in kilograms: "));
-    var height = parseFloat(prompt("Enter your height in meters: "));
-
-    var bmi = calculate_bmi(weight, height);
-    var interpretation = interpret_bmi(bmi);
-
-    alert("Your BMI is: " + bmi.toFixed(2) + "\nInterpretation: " + interpretation);
 </script>
+</body>
+</html>
